@@ -7,11 +7,11 @@ interface ComponentProps {}
 
 const Layout: FC<ComponentProps> = () => {
   return (
-    <>
+    <div className="min-h-screen">
       <Navbar />
       <Outlet />
       <Toaster />
-    </>
+    </div>
   )
 }
 
