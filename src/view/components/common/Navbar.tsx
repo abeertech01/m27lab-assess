@@ -1,30 +1,12 @@
-import { FC, useEffect, useState } from "react"
+import { FC } from "react"
 import avatar from "@/assets/avatar.jpg"
-import { Button } from "@/components/ui/button"
-import { useLocation, useNavigate } from "react-router-dom"
+import { Button } from "@/view/components/ui/button"
+import { useNavbarController } from "./navbar.controller"
 
 interface ComponentProps {}
 
 const Navbar: FC<ComponentProps> = () => {
-  const [loggedin, seLoggedin] = useState(false)
-  const location = useLocation()
-  const navigate = useNavigate()
-
-  const loginBtn = () => {
-    if (loggedin) {
-      localStorage.removeItem("user")
-      seLoggedin(false)
-    }
-    navigate("/login")
-  }
-
-  useEffect(() => {
-    const user = localStorage.getItem("user")
-
-    if (user && location.pathname === "/") {
-      seLoggedin(true)
-    }
-  }, [location])
+  const { loggedin, loginBtn } = useNavbarController()
 
   return (
     <div className="flex justify-between items-center px-5 py-3">
