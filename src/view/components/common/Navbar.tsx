@@ -1,12 +1,13 @@
 import { FC } from "react"
 import avatar from "@/assets/avatar.jpg"
-import { Button } from "@/components/ui/button"
-import { useNavigate } from "react-router-dom"
+import { Button } from "@/view/components/ui/button"
+import { useNavbarController } from "./navbar.controller"
 
 interface ComponentProps {}
 
 const Navbar: FC<ComponentProps> = () => {
-  const navigate = useNavigate()
+  const { loggedin, loginBtn } = useNavbarController()
+
   return (
     <div className="flex justify-between items-center px-5 py-3">
       <div className="logo flex items-center gap-2">
@@ -25,7 +26,9 @@ const Navbar: FC<ComponentProps> = () => {
           <li>About</li>
           <li>Contact</li>
           <li>
-            <Button onClick={() => navigate("/login")}>Login</Button>
+            <Button onClick={loginBtn}>
+              {loggedin ? "Log Out" : "Log In"}
+            </Button>
           </li>
         </ul>
       </div>

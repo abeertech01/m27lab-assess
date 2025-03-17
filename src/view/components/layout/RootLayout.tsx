@@ -1,11 +1,11 @@
 import { FC } from "react"
 import { Outlet } from "react-router-dom"
-import { Toaster } from "@/components/ui/sonner"
-import Navbar from "@/components/Navbar"
+import { Toaster } from "@/view/components/ui/sonner"
+import Navbar from "@/view/components/common/Navbar"
 
 interface ComponentProps {}
 
-const Layout: FC<ComponentProps> = () => {
+const RootLayout: FC<ComponentProps> = () => {
   return (
     <div className="min-h-screen">
       <Navbar />
@@ -15,4 +15,4 @@ const Layout: FC<ComponentProps> = () => {
   )
 }
 
-export default Layout
+export default RootLayout
