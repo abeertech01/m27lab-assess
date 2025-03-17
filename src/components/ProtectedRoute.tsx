@@ -1,5 +1,5 @@
 import { FC, useEffect } from "react"
-import { useNavigate } from "react-router-dom"
+import { Outlet, useNavigate } from "react-router-dom"
 
 interface ComponentProps {}
 
@@ -14,11 +14,7 @@ const ProtectedRoute: FC<ComponentProps> = () => {
     }
   }, [])
 
-  return (
-    <div>
-      <h1>Welcome to ProtectedRoute Component</h1>
-    </div>
-  )
+  return <Outlet />
 }
 
 export default ProtectedRoute
