@@ -1,12 +1,31 @@
-import { FC } from "react"
+import { FC, useEffect, useState } from "react"
 import avatar from "@/assets/avatar.jpg"
 import { Button } from "@/components/ui/button"
-import { useNavigate } from "react-router-dom"
+import { useLocation, useNavigate } from "react-router-dom"
 
 interface ComponentProps {}
 
 const Navbar: FC<ComponentProps> = () => {
+  const [loggedin, seLoggedin] = useState(false)
+  const location = useLocation()
   const navigate = useNavigate()
+
+  const loginBtn = () => {
+    if (loggedin) {
+      localStorage.removeItem("user")
+      seLoggedin(false)
+    }
+    navigate("/login")
+  }
+
+  useEffect(() => {
+    const user = localStorage.getItem("user")
+
+    if (user && location.pathname === "/") {
+      seLoggedin(true)
+    }
+  }, [location])
+
   return (
     <div className="flex justify-between items-center px-5 py-3">
       <div className="logo flex items-center gap-2">
@@ -25,7 +44,9 @@ const Navbar: FC<ComponentProps> = () => {
           <li>About</li>
           <li>Contact</li>
           <li>
-            <Button onClick={() => navigate("/login")}>Login</Button>
+            <Button onClick={loginBtn}>
+              {loggedin ? "Log Out" : "Log In"}
+            </Button>
           </li>
         </ul>
       </div>

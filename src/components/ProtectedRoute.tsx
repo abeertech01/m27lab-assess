@@ -3,15 +3,16 @@ import { useNavigate } from "react-router-dom"
 
 interface ComponentProps {}
 
-type User = {
-  email: string
-  password: string
-}
-
 const ProtectedRoute: FC<ComponentProps> = () => {
   const navigate = useNavigate()
 
-  useEffect(() => {}, [])
+  useEffect(() => {
+    const user = localStorage.getItem("user")
+
+    if (!user) {
+      navigate("/login")
+    }
+  }, [])
 
   return (
     <div>

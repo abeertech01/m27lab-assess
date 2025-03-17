@@ -47,7 +47,6 @@ const Login: FC<ComponentProps> = () => {
         }
       )
       localStorage.setItem("user", JSON.stringify(response.data))
-      console.log(response.data)
       navigate("/")
     } catch (error) {
       console.error("Login failed", error)
