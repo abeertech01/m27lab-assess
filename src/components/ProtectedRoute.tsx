@@ -11,19 +11,7 @@ type User = {
 const ProtectedRoute: FC<ComponentProps> = () => {
   const navigate = useNavigate()
 
-  useEffect(() => {
-    const localStorageData = localStorage.getItem("user")
-    const credentials: User = localStorageData && JSON.parse(localStorageData)
-    console.log(credentials)
-
-    if (
-      credentials === null ||
-      (credentials.email !== "test@email.com" &&
-        credentials.password !== "12345")
-    ) {
-      navigate("/login")
-    }
-  }, [])
+  useEffect(() => {}, [])
 
   return (
     <div>

@@ -2,7 +2,6 @@ import { Button } from "@/components/ui/button"
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -15,14 +14,13 @@ import { z } from "zod"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { toast } from "sonner"
 import { useNavigate } from "react-router-dom"
+import axios from "axios"
+import { AUTH_URL } from "@/constants/auth.constant"
 
 const formSchema = z.object({
-  email: z
-    .string()
-    .min(2, {
-      message: "Valid email required!",
-    })
-    .email(),
+  username: z.string().min(2, {
+    message: "Username required!",
+  }),
   password: z.string().min(2, {
     message: "Valid password required!",
   }),
@@ -36,15 +34,24 @@ const Login: FC<ComponentProps> = () => {
     resolver: zodResolver(formSchema),
   })
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    const email = values.email
-    const password = values.password
-
-    if (email === "test@email.com" && password === "12345") {
-      localStorage.setItem("user", JSON.stringify(values))
+  async function onSubmit(values: z.infer<typeof formSchema>) {
+    try {
+      const response = await axios.post(
+        AUTH_URL,
+        {
+          username: values.username,
+          password: values.password,
+        },
+        {
+          headers: { "Content-Type": "application/json" },
+        }
+      )
+      localStorage.setItem("user", JSON.stringify(response.data))
+      console.log(response.data)
       navigate("/")
-    } else {
-      toast("Invalid Credentials!")
+    } catch (error) {
+      console.error("Login failed", error)
+      toast("Invalid credentials")
     }
   }
 
@@ -56,12 +63,12 @@ const Login: FC<ComponentProps> = () => {
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
             <FormField
               control={form.control}
-              name="email"
+              name="username"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Email</FormLabel>
+                  <FormLabel>Username</FormLabel>
                   <FormControl>
-                    <Input placeholder="Enter Email" {...field} />
+                    <Input placeholder="Enter Username" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -74,7 +81,7 @@ const Login: FC<ComponentProps> = () => {
                 <FormItem>
                   <FormLabel>Password</FormLabel>
                   <FormControl>
-                    <Input placeholder="*****" {...field} />
+                    <Input type="password" placeholder="*****" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
